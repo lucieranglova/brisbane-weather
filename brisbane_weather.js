@@ -185,13 +185,15 @@ async function main() {
   if (!DISCORD_WEBHOOK) throw new Error("Missing DISCORD_WEBHOOK_URL");
 
   const weather = await fetchWeather();
-  console.log(`Forecast: ${weather.tempMin}–${weather.tempMax}°C, rain ${weather.rainChance}%, UV ${weather.uv}, wind ${weather.wind} km/h`);
+  console.log(`Forecast: ${weather.tempMin}–${weather.tempMax}°C, rain ${weather.rainChance}%, UV ${weather.uv}, wind ${weather.wind} km/h, code ${weather.code}`);
+
+  const warnings = getWarnings(weather);
+  console.log(`Warnings detected: ${warnings.length}`, JSON.stringify(warnings));
 
   // Send daily forecast
   await sendForecast(weather);
 
   // Send warnings only if needed
-  const warnings = getWarnings(weather);
   await sendWarnings(warnings);
 }
 
