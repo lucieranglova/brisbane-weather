@@ -18,11 +18,11 @@ const WEATHER_URL =
 
 // Warning thresholds — adjust these to your liking
 const THRESHOLDS = {
-  uvHigh:       8,    // UV index ≥ 8 → wear sunscreen warning
-  uvExtreme:    11,   // UV index ≥ 11 → extreme UV warning
-  windStrong:   60,   // Wind ≥ 60 km/h → strong wind warning
-  tempHeat:     35,   // Max temp ≥ 35°C → heat warning
-  rainStorm:    70,   // Rain chance ≥ 70% + storm code → storm warning
+  uvHigh:       1,    // UV index ≥ 8 → wear sunscreen warning
+  uvExtreme:    2,   // UV index ≥ 11 → extreme UV warning
+  windStrong:   1,   // Wind ≥ 60 km/h → strong wind warning
+  tempHeat:     3,   // Max temp ≥ 35°C → heat warning
+  rainStorm:    3,   // Rain chance ≥ 70% + storm code → storm warning
 };
 
 // WMO weather code → description + emoji
