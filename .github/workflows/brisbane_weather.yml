@@ -1,0 +1,25 @@
+name: Brisbane Weather Forecast
+
+on:
+  schedule:
+    # Every day at 5:00 AM Brisbane time (= 19:00 UTC, Brisbane is UTC+10)
+    - cron: "0 19 * * *"
+  workflow_dispatch:
+
+jobs:
+  weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Send Brisbane weather forecast
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node brisbane_weather.js
