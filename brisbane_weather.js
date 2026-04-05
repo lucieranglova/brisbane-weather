@@ -18,11 +18,11 @@ const WEATHER_URL =
 
 // Warning thresholds — adjust these to your liking
 const THRESHOLDS = {
-  uvHigh:       1,    // UV index ≥ 8 → wear sunscreen warning
-  uvExtreme:    2,   // UV index ≥ 11 → extreme UV warning
-  windStrong:   1,   // Wind ≥ 60 km/h → strong wind warning
-  tempHeat:     3,   // Max temp ≥ 35°C → heat warning
-  rainStorm:    3,   // Rain chance ≥ 70% + storm code → storm warning
+  uvHigh:       8,    // UV index ≥ 8 → wear sunscreen warning
+  uvExtreme:    11,   // UV index ≥ 11 → extreme UV warning
+  windStrong:   60,   // Wind ≥ 60 km/h → strong wind warning
+  tempHeat:     35,   // Max temp ≥ 35°C → heat warning
+  rainStorm:    70,   // Rain chance ≥ 70% + storm code → storm warning
 };
 
 // WMO weather code → description + emoji
@@ -185,15 +185,13 @@ async function main() {
   if (!DISCORD_WEBHOOK) throw new Error("Missing DISCORD_WEBHOOK_URL");
 
   const weather = await fetchWeather();
-  console.log(`Forecast: ${weather.tempMin}–${weather.tempMax}°C, rain ${weather.rainChance}%, UV ${weather.uv}, wind ${weather.wind} km/h, code ${weather.code}`);
-
-  const warnings = getWarnings(weather);
-  console.log(`Warnings detected: ${warnings.length}`, JSON.stringify(warnings));
+  console.log(`Forecast: ${weather.tempMin}–${weather.tempMax}°C, rain ${weather.rainChance}%, UV ${weather.uv}, wind ${weather.wind} km/h`);
 
   // Send daily forecast
   await sendForecast(weather);
 
   // Send warnings only if needed
+  const warnings = getWarnings(weather);
   await sendWarnings(warnings);
 }
 
